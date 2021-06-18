@@ -1,0 +1,7 @@
+The Cacao Game Engine
+
+* Joystick controller support (read on the GLFW documentation page)
+    -> currently only support keyboard and mouse
+
+* Implement perspective projection for 3D rendering
+    -> currently only support orthographic
