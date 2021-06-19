@@ -25,7 +25,7 @@ public class LevelEditorScene extends Scene {
 
     @Override
     public void init() {
-        // Load the necessary resources from the asset pool, if they don't exist it's created
+        // Load the necessary resources for the current scene, if they don't exist it's created
         loadResources();
 
         camera = new Camera2D(new Vector2f());
@@ -38,7 +38,7 @@ public class LevelEditorScene extends Scene {
 
    
 
-        for (int i = 0; i < 1400; i++) {
+        for (int i = 0; i < 2000; i++) {
             // Mario
             GameObject mario = new GameObject(
                     "Mario" + offset,
@@ -61,7 +61,7 @@ public class LevelEditorScene extends Scene {
 
             offset += size;
 
-            if (offset >= 1920){
+            if (offset >= 1300){
                 offset = 0;
                 row++;
             }
@@ -86,21 +86,34 @@ public class LevelEditorScene extends Scene {
 
     }
 
-    private boolean firstTime = true;
+    private int spriteIndex = 1;
+    private float delayMs = .2f;
+    private float timeElapsed;
     @Override
     public void update(float dt) {
+        timeElapsed += dt;
+
         for (GameObject go : this.gameObjects) {
-           go.update(dt);
+            //go.transform.position.x += Math.random() * 100 * dt;
+
+            if(timeElapsed >= delayMs) {
+                go.getComponent(SpriteRenderer.class).setSprite(AssetPool.getSpriteSheet("spritesheet.png").getSprite(spriteIndex));
+                spriteIndex = ( 1 + ((spriteIndex + 1) % 3));
+            }
+
+            go.update(dt);
         }
+        if (timeElapsed >= delayMs)
+            timeElapsed = 0f;
 
         if (KeyListener.isKeyPressed(GLFW_KEY_W))
-            getCamera().move(0, 100, dt);
+            getCamera().move(0, 300, dt);
         if (KeyListener.isKeyPressed(GLFW_KEY_S))
-            getCamera().move(0, -100, dt);
+            getCamera().move(0, -300, dt);
         if (KeyListener.isKeyPressed(GLFW_KEY_A))
-            getCamera().move(-100, 0, dt);
+            getCamera().move(-300, 0, dt);
         if (KeyListener.isKeyPressed(GLFW_KEY_D))
-            getCamera().move(100, 0, dt);
+            getCamera().move(300, 0, dt);
 
         renderer.render();
 

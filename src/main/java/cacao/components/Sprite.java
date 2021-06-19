@@ -1,7 +1,10 @@
 package cacao.components;
 
 import cacao.renderer.Texture;
+import cacao.renderer.Transform;
 import org.joml.Vector2f;
+
+import java.util.Arrays;
 
 public class Sprite {
     private Texture texture;
@@ -41,5 +44,13 @@ public class Sprite {
 
     public Vector2f[] getTexCoords() {
         return texCoords;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        if (!(o instanceof Sprite s)) return false;
+
+        return Arrays.equals(s.texCoords, this.texCoords) && s.texture.equals(this.texture);
     }
 }

@@ -89,4 +89,14 @@ public class Texture {
     public String getFileName() {
         return fileName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null) return false;
+        if (!(o instanceof Texture t)) return false;
+        Texture oTexture = (Texture) o;
+
+        return this.filepath.equals(oTexture.fileName)
+                && this.texID == oTexture.texID;
+    }
 }
